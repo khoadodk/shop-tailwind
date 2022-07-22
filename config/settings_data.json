@@ -5,6 +5,8 @@
       "header": {
         "type": "header",
         "settings": {
+          "logo_width": 50,
+          "mobile_menu_title": "Menu",
           "menu": "main-menu"
         }
       }
