@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "npx tailwindcss -i ./src/tailwind.css -o assets/tailwind.css --watch",
     "build": "npx tailwindcss build ./src/tailwind.css -o assets/tailwind.css && theme deploy"
   },
   "keywords": [],
