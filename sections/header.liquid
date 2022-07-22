@@ -10,7 +10,7 @@
           {% assign image_size = section.settings.logo_width | append: 'x' -%}
           <img
               srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
-              src="{{ section.settings.logo | img_url: image_size }}" loading="lazy" class="header__heading-logo"
+              src="{{ section.settings.logo | img_url: image_size }}" loading="lazy" class=""
               width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}"
               alt="{{ section.settings.logo.alt | default: shop.name | escape }}">
           {% else %}
@@ -139,12 +139,12 @@
 
 {% schema %}
 {
-    "name": "t:sections.header.name",
+    "name": "Header",
     "settings": [
         {
           "type": "image_picker",
           "id": "logo",
-          "label": "t:sections.header.settings.logo.label"
+          "label": "Logo label"
         },
         {
           "type": "range",
@@ -153,8 +153,8 @@
           "max": 250,
           "step": 10,
           "default": 100,
-          "unit": "t:sections.header.settings.logo_width.unit",
-          "label": "t:sections.header.settings.logo_width.label"
+          "unit": "logo unit",
+          "label": "logo label"
         },
         {
           "type": "text",
