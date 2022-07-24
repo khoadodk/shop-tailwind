@@ -7,14 +7,12 @@
       <div class="flex justify-start lg:flex-1">
         <a href="{{ routes.root_url }}">
           {% if section.settings.logo != blank %}
-          {% assign image_size = section.settings.logo_width | append: 'x' -%}
-          <img
-              srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
-              src="{{ section.settings.logo | img_url: image_size }}" loading="lazy" class=""
-              width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}"
-              alt="{{ section.settings.logo.alt | default: shop.name | escape }}">
+            <img
+                src="{{ section.settings.logo | img_url: 'thumb'}}" loading="lazy"
+                width="{{ section.settings.logo_width }}"
+            />
           {% else %}
-          <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
+            <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
           {% endif %}
         </a>
       </div>
