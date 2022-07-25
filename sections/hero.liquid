@@ -1,0 +1,113 @@
+<section id="hero" class="container mx-auto px-4">
+    <figure class="relative">
+        <!-- MEDIA COVER -->
+            <div class="w-full overflow-hidden bg-cover">
+                {% if section.settings.image != blank %}
+                <img  
+                    src="{{ section.settings.image | img_url: 'master' }}"
+                    alt="{{ section.settings.image.alt | escape }}" 
+                >
+                {% else %}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+            </div>
+        <!-- CAPTION -->
+        <figurecaption class="absolute flex w-2/5 bottom-9 left-9">
+            <div>
+                {% for block in section.blocks %}
+                {% case block.type %}
+                    {% when 'subtitle' %}
+                        <p class="font-semibold text-white">{{ block.settings.subtitle }}</p>
+                    {% when 'title' %}
+                        <p class="text-3xl text-white lg:text-7xl" style="letter-spacing: -0.039em;line-height: 0.84; font-weight: 900;">
+                            {{ block.settings.title }}
+                        </p>
+                    {% when 'button' %} 
+                        <div class="relative z-10 mt-5">
+                            {% if block.settings.button_label != blank %}
+                            <a href="{{ block.settings.button_link }}" {{ block.shopify_attributes }} class="btn-primary">
+                                {{ block.settings.button_label | escape }}
+                            </a>
+                            {% endif %}
+                        </div>
+                {% endcase %}
+                {% endfor %}
+            </div>
+        </figurecaption>
+    </figure>
+</section>
+
+{% schema %}
+{
+    "name": "Hero",
+    "settings": [
+        {
+            "type":"image_picker",
+            "id":"image",
+            "label":"Hero image"
+        }
+    ],
+    "blocks":[
+	   {
+		  "type":"title",
+		  "name":"Title",
+		  "limit":1,
+		  "settings":[
+			 {
+				"type":"text",
+				"id":"title",
+				"label":"Title",
+				"default":"Title"
+			 }
+		  ]
+	   },
+       {
+            "type":"subtitle",
+            "name":"Subtitle",
+            "limit":1,
+            "settings":[
+                {
+                    "type":"text",
+                    "id":"subtitle",
+                    "label":"Subtitle",
+                    "default":"Subtitle"
+                }
+            ]
+        },
+        {
+            "type":"button",
+            "name":"Button",
+            "limit":1,
+            "settings":[
+               {
+                  "type":"text",
+                  "id":"button_label",
+                  "default":"Button label",
+                  "label":"Button label"
+               },
+               {
+                  "type":"url",
+                  "id":"button_link",
+                  "label":"Link"
+               }
+            ]
+        }
+    ],
+    "presets":[
+	   {
+		  "name":"Hero",
+		  "blocks":[
+			 {
+				"type":"subtitle"
+			 },
+			 {
+				"type":"title"
+			 },
+			 {
+				"type":"button"
+			 }
+		  ]
+	   }
+	]
+}
+{% endschema %}

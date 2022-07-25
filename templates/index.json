@@ -1,13 +1,10 @@
 {
     "sections": {
-      "featured-collection": {
-        "type": "featured-collection",
-        "settings": {
-            "featured_collection": "all"
-        }
+      "hero": {
+        "type": "hero"
       }
     },
     "order": [
-        "featured-collection"
+        "hero"
     ]
 }
