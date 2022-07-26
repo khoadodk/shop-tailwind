@@ -1,0 +1,110 @@
+<section id="hero" class="container mx-auto px-4 mb-[5vw]">
+    <!-- TITLE -->
+    <div class="-mx-2">
+        <div class="relative inline-block w-full px-2">
+            <div class="flex items-baseline justify-between mb-6">
+                <h2 class="mr-auto text-2xl font-bold">
+                    {{ section.settings.title }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHOTOS -->
+    <div class="-mx-2 sm:grid sm:grid-cols-2">
+       {% for block in section.blocks %}
+             <!-- Collection-->
+            <div class="relative inline-block w-full px-2">
+                <figure class="relative block">
+                    <!-- IMG -->
+                    <div class="relative w-full p-0 m-0 bg-white h-500px lg:h-700px r1440:h-900px">
+                        <div class="w-full h-full">
+                            {% if block.settings.image != blank %}
+                            <img  
+                                src="{{ block.settings.image | img_url: '600x' }}"
+                                alt="{{ block.settings.image.alt | escape }}"
+                                class="object-cover w-full h-full"
+                            >
+                            {% else %}
+                                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Title -->
+                    <figcaption class="absolute flex flex-col justify-end w-11/12 text-left bottom-6 left-6 h-11/12 sm:w-3/4 lg:left-8">
+                        <div>
+                            <p class="mb-2.5 text-xl font-bold text-white">{{ block.settings.title }}</p>
+                            <div class="mt-4">
+                                {% if block.settings.button_label != blank %}
+                                <a href="{{ block.settings.button_link }}" class="text-black bg-white btn-primary">{{ block.settings.button_label }}</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+       {% endfor %}
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Two Collections",
+    "settings": [
+        {
+            "type":"text",
+            "id":"title",
+            "label":"Collection Title",
+            "default": "Collection Title"
+        }
+    ],
+    "max_blocks": 2,
+    "blocks": [
+        {
+            "name": "Collection",
+            "type": "collection",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type":"text",
+                    "id":"title",
+                    "label":"Title",
+                    "default": "Title"
+                },
+                {
+                    "type":"text",
+                    "id":"button_label",
+                    "default":"Button label",
+                    "label":"Button label"
+                },
+                {
+                    "type":"url",
+                    "id":"button_link",
+                    "label":"Link"
+                }
+            ]
+        }
+    ],
+    "presets":[
+        {
+        "name":"Two Collections",
+        "settings": {
+            "title": "2 Collections Title"
+        },
+        "blocks":
+            [
+                {
+                    "type":"collection"
+                },
+                {
+                    "type":"collection"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

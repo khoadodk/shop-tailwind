@@ -1,4 +1,4 @@
-<section id="hero" class="container mx-auto px-4">
+<section id="hero" class="container mx-auto px-4 mb-[5vw]">
     <figure class="relative">
         <!-- MEDIA COVER -->
             <div class="w-full overflow-hidden bg-cover">
@@ -12,12 +12,12 @@
                 {% endif %}
             </div>
         <!-- CAPTION -->
-        <figurecaption class="absolute flex w-2/5 bottom-9 left-9">
+        <figcaption class="absolute flex w-2/5 bottom-9 left-9">
             <div>
                 {% for block in section.blocks %}
                 {% case block.type %}
                     {% when 'subtitle' %}
-                        <p class="font-semibold text-white">{{ block.settings.subtitle }}</p>
+                        <p class="m-1 font-semibold text-white">{{ block.settings.subtitle }}</p>
                     {% when 'title' %}
                         <p class="text-3xl text-white lg:text-7xl" style="letter-spacing: -0.039em;line-height: 0.84; font-weight: 900;">
                             {{ block.settings.title }}
@@ -33,7 +33,7 @@
                 {% endcase %}
                 {% endfor %}
             </div>
-        </figurecaption>
+        </figcaption>
     </figure>
 </section>
 
