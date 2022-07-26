@@ -29,7 +29,7 @@
         height: 40px;
         width: 40px;
         line-height: 40px;
-        background-color: #fff;
+        background-color: 	rgb(220,220,220);
         border-radius: 20px;
         text-align: center;
         font-size: 14px;
@@ -93,14 +93,25 @@
 
 <script>
     var swiper = new Swiper(".mySwiper", {
-      slidesPerView: 3,
-      spaceBetween: 30,
-      scrollbar: {
-        el: ".swiper-scrollbar"
-      },
-      navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
+        slidesPerView: 3.5,
+        spaceBetween: 30,
+        scrollbar: {
+            el: ".swiper-scrollbar"
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev"
+            },
+        breakpoints: {
+            500: {
+                slidesPerView: 1
+            },
+            700: {
+                slidesPerView: 1.5
+            },
+            1200: {
+                slidesPerView: 3.5
+            }
         }
     });
 </script>

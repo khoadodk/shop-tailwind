@@ -1,25 +1,26 @@
 <section id="hero" class="container mx-auto px-4 mb-[5vw]">
     <figure class="relative">
         <!-- MEDIA COVER -->
-            <div class="w-full overflow-hidden bg-cover">
+            <div class="h-full w-full overflow-hidden bg-cover">
                 {% if section.settings.image != blank %}
                 <img  
                     src="{{ section.settings.image | img_url: 'master' }}"
-                    alt="{{ section.settings.image.alt | escape }}" 
+                    alt="{{ section.settings.image.alt | escape }}"
+                    class="h-[500px] sm:h-full w-auto bg-center"
                 >
                 {% else %}
                     {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
                 {% endif %}
             </div>
         <!-- CAPTION -->
-        <figcaption class="absolute flex w-2/5 bottom-9 left-9">
+        <figcaption class="mt-2 sm:absolute flex sm:w-2/5 w-full sm:bottom-9 sm:left-9">
             <div>
                 {% for block in section.blocks %}
                 {% case block.type %}
                     {% when 'subtitle' %}
-                        <p class="m-1 font-semibold text-white">{{ block.settings.subtitle }}</p>
+                        <p class="m-1 font-semibold sm:text-white text-black">{{ block.settings.subtitle }}</p>
                     {% when 'title' %}
-                        <p class="text-3xl text-white lg:text-7xl" style="letter-spacing: -0.039em;line-height: 0.84; font-weight: 900;">
+                        <p class="text-3xl lg:text-7xl sm:text-white text-black" style="letter-spacing: -0.039em;line-height: 0.84; font-weight: 900;">
                             {{ block.settings.title }}
                         </p>
                     {% when 'button' %} 
