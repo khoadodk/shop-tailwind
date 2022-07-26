@@ -1,0 +1,143 @@
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+<style>
+    .swiper-scrollbar {
+        width: calc(66.66% - 96px)!important;
+        margin: 30px auto 10px!important;
+        position: relative!important;
+    }
+
+    div[class^=swiper-button].swiper-button-prev:after {
+    left: 84px;
+    content: "\276e";
+    color: black
+    }
+
+    div[class^=swiper-button].swiper-button-next:after {
+    right: 84px;
+    content: "\276f";
+    color: black
+    }
+    
+    div[class^=swiper-button]:after {
+        content: "";
+        display: block;
+        height: 40px;
+        width: 40px;
+        line-height: 40px;
+        background-color: #fff;
+        border-radius: 20px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 700;
+        position: absolute;
+        top: calc(50% - 20px);
+    }
+</style>
+
+<section id="featured-products" class="container mx-auto px-4 mb-[5vw]">
+     <!-- TITLE -->
+     <div class="-mx-2">
+        <div class="relative inline-block w-full px-2">
+            <div class="flex items-baseline justify-between mb-6">
+                <h2 class="mr-auto text-2xl font-bold">
+                    {{ section.settings.title }}
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!-- CAROUSEL -->
+    <div class="3xl:mx-auto 3xl:max-w-1792px ">
+        <div class="swiper w-full h-full mySwiper">
+            <div class="swiper-wrapper">
+                {% for block in section.blocks %}
+                    {% assign product = all_products[block.settings.product] %}
+                    <!-- Product container -->
+                    <div class="swiper-slide">
+                        <a href="{{ product.url }}">
+                            <div class="relative w-full h-full p-0 m-0">
+                                <div class="w-full h-full">
+                                    {% if product.images != blank %}
+                                    <img  
+                                        src="{{ product.images.first | img_url: '600x' }}"
+                                        alt="{{ product.images.first.alt | escape }}"
+                                        class="object-cover w-full h-full"
+                                    >
+                                    {% else %}
+                                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="relative bottom-0 left-0 right-0 flex flex-col mt-3 mr-4 text-black bg-white sm:flex-row sm:justify-between">
+                                <div>
+                                    <h4 class="text-base font-bold">{{ product.title }}</h4>
+                                    <p class="text-gray-500">{{ product.vendor }}</p>
+                                </div>
+                                <p><span class="font-bold">{{ product.price | money }}</span></p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-scrollbar"></div>
+        </div>
+    </div>
+
+</section>
+
+<script>
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 3,
+      spaceBetween: 30,
+      scrollbar: {
+        el: ".swiper-scrollbar"
+      },
+      navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        }
+    });
+</script>
+.
+{% schema %}
+{
+    "name": "Carousel",
+    "settings": [
+        {
+            "type":"text",
+            "id":"title",
+            "label":"Carousel Title",
+            "default": "Carousel Title"
+        }
+    ],
+    "max_blocks": 6,
+    "blocks": [
+        {
+            "name": "New Arrival",
+            "type": "new-arrival",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product"
+                }
+            ]
+        }
+    ],
+    "presets":[
+        {
+        "name":"Carousel",
+        "settings": {
+            "title": "Carousel Title"
+        },
+        "blocks":[]
+        }
+    ]
+}
+{% endschema %}

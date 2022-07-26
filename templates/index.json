@@ -5,10 +5,15 @@
       },
       "two-collections": {
         "type": "two-collections"
+      },
+      "featured-products": {
+        "type": "featured-products"
       }
     },
     "order": [
         "hero",
-        "two-collections"
+        "two-collections",
+        "hero",
+        "featured-products"
     ]
 }
