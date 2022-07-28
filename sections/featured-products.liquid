@@ -12,13 +12,11 @@
     }
 
     div[class^=swiper-button].swiper-button-prev:after {
-    left: 84px;
     content: "\276e";
     color: black
     }
 
     div[class^=swiper-button].swiper-button-next:after {
-    right: 84px;
     content: "\276f";
     color: black
     }
@@ -29,7 +27,7 @@
         height: 40px;
         width: 40px;
         line-height: 40px;
-        background-color: 	rgb(220,220,220);
+        background-color:rgb(220,220,220);
         border-radius: 20px;
         text-align: center;
         font-size: 14px;
@@ -43,12 +41,17 @@
      <!-- TITLE -->
      <div class="-mx-2">
         <div class="relative inline-block w-full px-2">
-            <div class="flex items-baseline justify-between mb-6">
-                <h2 class="mr-auto text-2xl font-bold">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold">
                     {{ section.settings.title }}
                 </h2>
+                <div class="relative w-[100px] swiper-buttons">
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
             </div>
         </div>
+        
     </div>
     <!-- CAROUSEL -->
     <div class="3xl:mx-auto 3xl:max-w-1792px ">
@@ -83,8 +86,6 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
             <div class="swiper-scrollbar"></div>
         </div>
     </div>
@@ -103,11 +104,11 @@
             prevEl: ".swiper-button-prev"
             },
         breakpoints: {
-            500: {
+            200: {
                 slidesPerView: 1
             },
             700: {
-                slidesPerView: 1.5
+                slidesPerView: 2
             },
             1200: {
                 slidesPerView: 3.5
