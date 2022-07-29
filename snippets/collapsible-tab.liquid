@@ -1,0 +1,35 @@
+<style>
+  .accordion {
+    cursor: pointer;
+  }
+  .accordion.active .accordion-collapse {
+    display: block!important;
+  }
+  .accordion-collapse {
+    display: none;
+    height: auto;
+  }
+</style>
+
+<div class="accordion bg-white border border-gray-200">
+  <div class="accordion-header relative
+      flex
+      items-center
+      justify-between
+      w-full
+      py-3
+      px-5
+      text-base text-gray-800 text-left
+      bg-white
+      border-0
+      rounded-none">
+    <h2>{{ title }}</h2>
+    <div>{% render 'icon-dropdown' %}</div>
+  </div>
+  
+  <div class="accordion-collapse p-4" >
+      {{ description }}
+  </div>
+</div>
+
+

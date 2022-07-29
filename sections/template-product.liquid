@@ -131,6 +131,11 @@
                                     {% endif %}
                                 </button>
                             </div>
+
+                        {% when 'collapsible_tab' %}
+                            <div class="my-3">
+                                {% render 'collapsible-tab', title: block.settings.collapsible_title, description: block.settings.collapsible_description  %}
+                            </div>
                         {% else %}
 
                     {% endcase %}
@@ -142,6 +147,7 @@
     </div>
 </div>
 
+<!-- Custom JS for cart -->
 <script>
     class VariantSelector extends HTMLElement {
         constructor() {
@@ -204,7 +210,7 @@
     customElements.define("variant-selector", VariantSelector);
 </script>
 
-
+<!-- SwiperJS -->
 <script>
     const swiper = new Swiper('.swiper', {
         direction: 'horizontal',
@@ -216,6 +222,13 @@
             nextEl: '.swiper-button-next'
         }
     })
+</script>
+<!-- Accordions -->
+<script>
+    const accordions = document.querySelectorAll(".accordion")
+    accordions.forEach((accordion) => accordion.addEventListener("click", () =>{
+      accordion.classList.toggle("active")
+    }))
 </script>
 
 {% schema %}
@@ -256,6 +269,22 @@
             "type": "checkout_button",
             "name": "Checkout Button",
             "limit": 1
+        },
+        { 
+            "type": "collapsible_tab",
+            "name": "Collapsible Tab",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "collapsible_title",
+                    "label": "Collapsible Title"
+                },
+                {
+                    "type": "richtext",
+                    "id": "collapsible_description",
+                    "label": "Collapsible Description"
+                }
+            ]
         }
     ]
 }
