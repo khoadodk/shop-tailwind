@@ -166,7 +166,7 @@
         getSelectedOptions() {
             // Grabs all the select and put in array ["size", "color"] 
             this.options = Array.from(this.querySelectorAll('select'), (select) => select.value);
-            console.log("Selected options", this.options);
+            // console.log("Selected options", this.options);
         }
         getVariantJSON() {
             // Grab all the variants in json format
@@ -185,7 +185,7 @@
                     if(findings) return variant;
                 }
             );
-            console.log("Current variant", this.currentVariant);
+            // console.log("Current variant", this.currentVariant);
         }
         updateURL() {
             if(!this.currentVariant) return;

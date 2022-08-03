@@ -75,7 +75,7 @@
         <!-- USER LOGIN/LOGOUT -->
         {% if shop.customer_accounts_enabled %}
           {% if customer %}
-            <a href="{{ routes.account_url }}">account</a>
+            <a href="{{ routes.account_url }}" class="whitespace-nowrap text-base font-semibold text-gray-700 hover:text-gray-400">{% render "icon-person" %}</a>
             {{"Log out" | customer_logout_link | replace: '<a', '<a class="text-base font-semibold text-gray-700 hover:text-gray-400"'}}
             {% else %}
             {{"Log in" | customer_login_link | replace: '<a', '<a class="text-base font-semibold text-gray-700 hover:text-gray-400"'}}
@@ -147,7 +147,7 @@
         <form action="{{ routes.search_url }}" method="get" class="flex-auto">
             <div class="w-1/2 mx-auto relative text-gray-500 px-10 border">
                 <input type="search" name="q" placeholder="Search" class="w-full bg-white h-10 px-5 rounded-full text-sm focus:outline-none">
-                <button type="submit" class="absolute h-full right-0 top-0 mr-2 md:mr-20">
+                <button type="submit" class="absolute h-full right-0 top-0 mr-2 md:mr-20 font-semibold text-gray-700 hover:text-gray-400">
                     {% render 'icon-search' %}
                 </button>
             </div>

@@ -1,7 +1,7 @@
 <div class="h-full flex items-center justify-center py-12 px-6 md:px-4 lg:px-8" x-data="{ loginForm: true, pwRecoverForm: false }">
     <div x-show="loginForm" class="max-w-md w-full space-y-8">
         <div>
-            <h1 class="text-center text-3xl font-bold mt-6">Welcome back!</h1>
+            <h1 class="text-center text-3xl font-bold mt-6">Register</h1>
         </div>
         <div class="mt-8">
             {% form 'customer_login' %}
@@ -48,6 +48,24 @@
                 </div>
             {% endform %}
         </div>
+
+        <!-- GUEST CHECKOUT -->
+        {% if shop.checkout.guest_login %}
+            <hr class="my-12">
+
+            <div>
+                <h1 class="mt-6 text-center text-3xl font-bold">Continue as a guest</h1>
+            </div>
+
+            {% form 'guest_login' %}
+                <div>
+                    <button type="submit" class="relative w-full py-2 px-4 text-sm font-medium text-white bg-gray-600 hover:bg-gray-900">
+                        Continue
+                    </button>
+                </div>
+            {% endform %}
+        {% endif %}
+
     </div>
     <div x-show="pwRecoverForm" class="max-w-md w-full space-y-8">
         <div>
