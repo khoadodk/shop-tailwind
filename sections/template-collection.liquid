@@ -1,22 +1,59 @@
+
 <div class="px-4 py-8">
-    {% paginate collection.products by section.settings.number_of_products_per_page %}
-        <h1 class="text-3xl text-center">{{ collection.title }}</h1>
+    <!-- SORT -->
+    {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+    <div  x-data="{
+          loading: false,
+          sort: '{{ sort_by }}',
+          sortCollection(){
+            this.loading = true;
+            fetch('/collections/{{ collection.handle }}?sort_by=' + this.sort)
+              .then(response => response.text())
+              .then(data => {
+                let html_div = document.createElement('div');
+                html_div.innerHTML = data;
+  
+                let html_dom = html_div.querySelector('#ProductGridContainer').innerHTML;
+                document.querySelector('#ProductGridContainer').innerHTML = html_dom;
+                // update url without refreshing the page 
+                history.replaceState(null, null, '?sort_by=' + this.sort);
+              })
+              .catch(error => console.error('Error:', error))
+              .finally(() => this.loading = false);
+          }
+    }">
+    {% render 'loader' %}
+        <select id="sort-by" x-model="sort" @change="sortCollection()" class="border py-3 px-3">
+            {% for option in collection.sort_options %}
+              <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+                {{ option.name }}
+              </option>
+            {% endfor %}
+        </select>
+    </div>
 
-        <div class="max-w-6xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {% for product in collection.products %}
-                   
-                    {% render "product-card", card_product: product, show_vendor: section.settings.show_vendor, %}
+    
+
+    <div id="ProductGridContainer">
+        {% paginate collection.products by section.settings.number_of_products_per_page %}
+            <h1 class="text-3xl text-center">{{ collection.title }}</h1>
+
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" >
+                    {% for product in collection.products %}
                     
-                {% else %}
-                    <p>There are no products inside of this collection</p>
-                {% endfor %}
+                        {% render "product-card", card_product: product, show_vendor: section.settings.show_vendor, %}
+                        
+                    {% else %}
+                        <p>There are no products inside of this collection</p>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-        
+            
 
-        {% render 'pagination', pagination: paginate %}
-    {% endpaginate %}
+            {% render 'pagination', pagination: paginate %}
+        {% endpaginate %}
+    </div>
 </div>
 
 {% schema %}
