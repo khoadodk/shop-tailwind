@@ -1,58 +1,101 @@
 
 <div class="px-4 py-8">
-    <!-- SORT -->
-    {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
-    <div  x-data="{
-          loading: false,
-          sort: '{{ sort_by }}',
-          sortCollection(){
-            this.loading = true;
-            fetch('/collections/{{ collection.handle }}?sort_by=' + this.sort)
-              .then(response => response.text())
-              .then(data => {
-                let html_div = document.createElement('div');
-                html_div.innerHTML = data;
-  
-                let html_dom = html_div.querySelector('#ProductGridContainer').innerHTML;
-                document.querySelector('#ProductGridContainer').innerHTML = html_dom;
-                // update url without refreshing the page 
-                history.replaceState(null, null, '?sort_by=' + this.sort);
-              })
-              .catch(error => console.error('Error:', error))
-              .finally(() => this.loading = false);
-          }
-    }">
-    {% render 'loader' %}
-        <select id="sort-by" x-model="sort" @change="sortCollection()" class="border py-3 px-3">
-            {% for option in collection.sort_options %}
-              <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
-                {{ option.name }}
-              </option>
+    <div class="flex justify-between items-center">
+        <!-- FILTER -->
+        {% assign hasFilter = false %}
+        {%- for filter in collection.filters -%}
+            {%- for filter_value in filter.active_values -%}
+                {% assign hasFilter = true %}
             {% endfor %}
-        </select>
+        {% endfor %}
+
+        <div class="active-filters flex space-x-3 items-center">
+            {% if hasFilter %}
+                <a href="{{ collection.url }}?sort_by={{ collection.sort_by }}" class="active-filters__clear flex items-center border text-white text-sm py-1 px-3 bg-[#757575] rounded-full">
+                Clear all
+                <span>{% render 'icon-close', class: 'ml-2 w-5' %}</span>
+                </a>
+            {% endif %}
+
+            {%- for filter in collection.filters -%}
+                {%- if filter.type == "price_range" -%}
+                {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+                    <a class="active-filters__remove-filter flex items-center border text-sm py-1 px-3 bg-[#d6d6d6] rounded-full" href="{{ filter.url_to_remove }}">
+                    {%- assign min_value = filter.min_value.value | default: 0 -%}
+                    {%- assign max_value = filter.max_value.value | default: filter.range_max -%}
+                    {{ min_value | money }} - {{ max_value | money }} <span>{% render 'icon-close', class: 'ml-2 w-5' %}</span>
+                    </a>
+                {%- endif -%}
+                {%- else -%}
+                {%- for filter_value in filter.active_values -%}
+                    <a class="active-filters__remove-filter flex items-center border text-sm py-1 px-3 bg-[#d6d6d6] rounded-full" href="{{ filter_value.url_to_remove }}">
+                    {{ filter_value.label }} <span>{% render 'icon-close', class: 'ml-2 w-5' %}</span>
+                    </a>
+                {%- endfor -%}
+                {%- endif- %}
+            {%- endfor -%}
+        </div>
+
+        <!-- SORT -->
+        {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+        <div
+        x-data="{
+            loading: false,
+            sort: '{{ sort_by }}',
+            sortCollection(){
+                this.loading = true;
+                fetch('/collections/{{ collection.handle }}?sort_by=' + this.sort)
+                .then(response => response.text())
+                .then(data => {
+                    let html_div = document.createElement('div');
+                    html_div.innerHTML = data;
+    
+                    let html_dom = html_div.querySelector('#ProductGridContainer').innerHTML;
+                    document.querySelector('#ProductGridContainer').innerHTML = html_dom;
+                    // update url without refreshing the page 
+                    history.replaceState(null, null, '?sort_by=' + this.sort);
+                })
+                .catch(error => console.error('Error:', error))
+                .finally(() => this.loading = false);
+            }
+        }">
+        {% render 'loader' %}
+            <select id="sort-by" x-model="sort" @change="sortCollection()" class="border py-3 px-3">
+                {% for option in collection.sort_options %}
+                <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+                    {{ option.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
     </div>
 
+    <div class="flex gap-2">
+        <!-- FILTER Sidebar-->
+        <div class="w-3/12">
+            {% render 'filters' %}
+        </div>
+
+        <div class="w-9/12" id="ProductGridContainer">
+            {% paginate collection.products by section.settings.number_of_products_per_page %}
+                <h1 class="text-3xl text-center">{{ collection.title }}</h1>
     
-
-    <div id="ProductGridContainer">
-        {% paginate collection.products by section.settings.number_of_products_per_page %}
-            <h1 class="text-3xl text-center">{{ collection.title }}</h1>
-
-            <div class="max-w-6xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" >
-                    {% for product in collection.products %}
-                    
-                        {% render "product-card", card_product: product, show_vendor: section.settings.show_vendor, %}
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" >
+                        {% for product in collection.products %}
                         
-                    {% else %}
-                        <p>There are no products inside of this collection</p>
-                    {% endfor %}
+                            {% render "product-card", card_product: product, show_vendor: section.settings.show_vendor, %}
+                            
+                        {% else %}
+                            <p class="col-span-3 text-center py-4">There is no available product!</p>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            
-
-            {% render 'pagination', pagination: paginate %}
-        {% endpaginate %}
+                
+    
+                {% render 'pagination', pagination: paginate %}
+            {% endpaginate %}
+        </div>
     </div>
 </div>
 

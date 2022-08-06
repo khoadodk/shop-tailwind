@@ -111,12 +111,10 @@
             </div>
             <div class="max-w-xs md:max-w-md w-full bg-white border-t-2 border-gray-600 fixed bottom-0 right-0 p-4">
 
-
                 {%- if cart.cart_level_discount_applications.size > 0 -%}
                     <div class="total-discounts flex justify-between font-medium pb-2  text-green-700">
                         {%- for discount in cart.cart_level_discount_applications -%}
                             <i class="flex space-x-1"> 
-                                {% render 'icon-discount', class: 'w-4 mr-1' %}
                                 <span>{{ discount.title }} </span>
                             </i>
                             <span>(-{{ discount.total_allocated_amount | money }})</span>
