@@ -1,7 +1,25 @@
+<style>
+    .hidden_desktop{
+      display:block;
+    }
+    .hidden_mobile {
+      display: none;
+    }
+    @media (min-width:992px){
+      .hidden_desktop{
+        display:none;
+      }
+      .hidden_mobile {
+        display: block;
+      }
+    }
+</style>
+
 <section id="hero" class="container mx-auto px-4 mb-[5vw]">
     <figure class="relative">
         <!-- MEDIA COVER -->
-            <div class="h-full w-full overflow-hidden bg-cover">
+            <div class="w-full h-auto overflow-hidden">
+                <!-- DESKTOP -->
                 {% if section.settings.image != blank %}
                 <img  
                     srcset="{%- if section.settings.image.width >= 165 -%}{{ section.settings.image | img_url: '165x' }} 165w,{%- endif -%}
@@ -11,9 +29,17 @@
                     {%- if section.settings.image.width >= 940 -%}{{ section.settings.image | img_url: '940x' }} 940w,{%- endif -%}
                     {%- if section.settings.image.width >= 1070 -%}{{ section.settings.image | img_url: '2000x' }} 2000w{%- endif -%}"
                     src="{{ section.settings.image | img_url: '533x' }}"
-                    sizes="(min-width: 1100px) 2000px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)"
-                    alt="{{ section.settings.image.alt | escape }}" width="{{ section.settings.image.width }}"
-                    height="{{ section.settings.image.height }}" class="min-h-[500px] sm:h-full w-auto bg-center"
+                    alt="{{ section.settings.image.alt | escape }}" 
+                    class="w-full h-auto overflow-hidden hidden_mobile"
+                >
+                {% else %}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+                {% if section.settings.image_mobile != blank %}
+                <img  
+                    src="{{ section.settings.image_mobile | img_url: '360x' }}"
+                    alt="{{ section.settings.image_mobile.alt | escape }}" 
+                    class="w-full h-auto overflow-hidden hidden_desktop"
                 >
                 {% else %}
                     {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -52,7 +78,12 @@
         {
             "type":"image_picker",
             "id":"image",
-            "label":"Hero image"
+            "label":"Hero image for Desktop (7:5 recommended)"
+        },
+        {
+            "type":"image_picker",
+            "id":"image_mobile",
+            "label":"Hero image for Mobile (7:10 recommended)"
         }
     ],
     "blocks":[
