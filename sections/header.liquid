@@ -8,7 +8,7 @@
         <a href="{{ routes.root_url }}">
           {% if section.settings.logo != blank %}
             <img
-                src="{{ section.settings.logo | img_url: 'thumb'}}" loading="lazy" 
+                src="{{ section.settings.logo | img_url: '100x'}}"
                 width="{{ section.settings.logo_width }}"
             />
           {% else %}
